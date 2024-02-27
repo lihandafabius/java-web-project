@@ -117,8 +117,6 @@
     <footer>
         <p>
             <%@ include file="footer.jsp" %>
-            &copy; Copyright 2024 Lost and Found System.
-            All rights reserved
         </p>
     </footer>
 </body>

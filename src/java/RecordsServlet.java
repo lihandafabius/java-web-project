@@ -33,8 +33,8 @@ public class RecordsServlet extends HttpServlet {
                 String locationFound = request.getParameter("location_found");
                 String dateFound = request.getParameter("date_found");
                 
-                PrintWriter out = response.getWriter(); // Establish database connection
-                Class.forName("com.mysql.cj.jdbc.Driver");
+                PrintWriter out = response.getWriter(); 
+                Class.forName("com.mysql.cj.jdbc.Driver");  // Establish database connection
                 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lost_and_founddb4", "root", "fabius001");
                 
                 // Prepare SQL statement
