@@ -80,18 +80,10 @@ public class ReporterServlet extends HttpServlet {
                      // Display success message
                  
                      out.println("<h1>Reporter details inserted successfully!</h1>");
+                     out.println("<h2>Kindly visit the security department for verification and confirmation of yoiur lost item.</h2>");
                      
                  } else {
-                     // Display failure message
-                     out.println("<!DOCTYPE html>");
-                     out.println("<html>");
-                     out.println("<head>");
-                     out.println("<title>Error</title>");
-                     out.println("</head>");
-                     out.println("<body>");
                      out.println("<h2>Failed to insert reporter details. Please try again.</h2>");
-                     out.println("</body>");
-                     out.println("</html>");
                  }
              }
              catch (SQLException ex) {
