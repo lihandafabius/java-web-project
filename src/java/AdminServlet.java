@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpSession;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,9 +35,14 @@ public class AdminServlet extends HttpServlet {
                     
                     if (rs.next()) {
                         // Authentication successful, redirect to records.html
-                        response.sendRedirect("records.html");
+                        HttpSession session = request.getSession();
+                        session.setAttribute("username", username);
+                        
+                        
                         Cookie ck=new Cookie("name",username);  
                         response.addCookie(ck);
+                        
+                        response.sendRedirect("records.html");
                        
  
                     } else {

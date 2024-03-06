@@ -8,6 +8,12 @@ public class LogOutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Retrieve the current session, false means do not create a new session if it doesn't exist
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate(); // Invalidate the session if it exists
+        }
+        
         // Delete the cookie by setting its maximum age to 0
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
