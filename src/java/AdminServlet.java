@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Cookie;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +35,10 @@ public class AdminServlet extends HttpServlet {
                     if (rs.next()) {
                         // Authentication successful, redirect to records.html
                         response.sendRedirect("records.html");
+                        Cookie ck=new Cookie("name",username);  
+                        response.addCookie(ck);
+                       
+ 
                     } else {
                         // Authentication failed, display error message
                         out.println("<h2>Authentication failed. Please check your username and password.</h2>");

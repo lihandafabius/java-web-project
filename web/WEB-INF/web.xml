@@ -12,6 +12,10 @@
         <servlet-name>AdminServlet</servlet-name>
         <servlet-class>AdminServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LogOutServlet</servlet-name>
+        <servlet-class>LogOutServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ReporterServlet</servlet-name>
         <url-pattern>/ReporterServlet</url-pattern>
@@ -23,5 +27,9 @@
     <servlet-mapping>
         <servlet-name>AdminServlet</servlet-name>
         <url-pattern>/AdminServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogOutServlet</servlet-name>
+        <url-pattern>/LogOutServlet</url-pattern>
     </servlet-mapping>
 </web-app>
