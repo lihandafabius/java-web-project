@@ -36,10 +36,10 @@ public class AdminServlet extends HttpServlet {
                     if (rs.next()) {
                         // Authentication successful, redirect to records.html
                         HttpSession session = request.getSession();
-                        session.setAttribute("username", username);
+                        session.setAttribute("user", username);
                         
                         
-                        Cookie ck=new Cookie("name",username);  
+                        Cookie ck=new Cookie("user",username);  
                         response.addCookie(ck);
                         
                         response.sendRedirect("records.html");
