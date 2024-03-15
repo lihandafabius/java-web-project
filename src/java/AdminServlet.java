@@ -1,4 +1,5 @@
 
+import Response.ResponseBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -10,7 +11,9 @@ import jakarta.servlet.http.HttpSession;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import Utils.SessionCheck;
+import business.User;
+import Utils.ServletUtils;
 
 public class AdminServlet extends HttpServlet {
 
@@ -18,15 +21,13 @@ public class AdminServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             try {
-                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = ServletUtils.getPrintWriter(response);
+                Connection conn = ServletUtils.getDBConnection();
                 
                 String username = request.getParameter("username");
                 String password = request.getParameter("password");
                 
-                PrintWriter out = response.getWriter();
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lost_and_founddb4", "root", "fabius001");
-                
+               
                 String sql = "SELECT * FROM admin WHERE username = ? AND password = ?";
                 try (PreparedStatement statement = conn.prepareStatement(sql)) {
                     statement.setString(1, username);
@@ -34,26 +35,35 @@ public class AdminServlet extends HttpServlet {
                     ResultSet rs = statement.executeQuery();
                     
                     if (rs.next()) {
+                        User user = new User(username, password);
                         // Authentication successful, redirect to records.html
                         HttpSession session = request.getSession();
-                        session.setAttribute("user", username);
+                        session.setAttribute("user", user);
                         
                         
                         Cookie ck=new Cookie("user",username);  
                         response.addCookie(ck);
+                        if (SessionCheck.isUserLoggedIn(request)) {
+                            // User is logged in, continue with the logic
+                            ResponseBuilder.buildRedirectResponse(out, "Successful login, welcome " + username + "!", "records.html");
+                        } 
+                        else {
+                            // User is not logged in, redirect to login page
+                            ResponseBuilder.buildRedirectResponse(out, "You are not logged in. Please log in to continue.", "admin-login.html");
+                        }
                         
-                        response.sendRedirect("records.html");
                        
  
                     } else {
                         // Authentication failed, display error message
-                        out.println("<h2>Authentication failed. Please check your username and password.</h2>");
+                        ResponseBuilder.buildRedirectResponse(out, "Authentication failed. Please check your username and password.", "admin-login.html");
                     }
                 }
-            } catch (ClassNotFoundException | SQLException ex) {
+            } catch (SQLException ex) {
             Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        } 
+        }
+    
     }
 
 

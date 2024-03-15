@@ -1,17 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-
+import Response.ResponseBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Utils.ServletUtils;
 
 
 /**
@@ -31,7 +26,8 @@ public class ReporterServlet extends HttpServlet {
  protected void doPost(HttpServletRequest request, HttpServletResponse response)
          throws ServletException, IOException {
          try {
-             response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = ServletUtils.getPrintWriter(response);
+            Connection conn = ServletUtils.getDBConnection();
              
              String name = request.getParameter("name");
              String contactNumber = request.getParameter("contact_number");
@@ -39,10 +35,6 @@ public class ReporterServlet extends HttpServlet {
              String locationLost = request.getParameter("location_lost");
              String itemLost = request.getParameter("item_lost");
              String dateLost = request.getParameter("date_lost");
-             
-             PrintWriter out = response.getWriter();
-             Class.forName("com.mysql.cj.jdbc.Driver");// Establish database connection
-             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lost_and_founddb4","root", "fabius001");
              
                         // Check if the report already exists
             String checkSql = "SELECT * FROM reporters WHERE name = ? AND contact_number = ? AND email = ? AND location_lost = ? AND item_lost = ? AND date_lost = ?";
@@ -57,7 +49,7 @@ public class ReporterServlet extends HttpServlet {
                 ResultSet rs = checkStatement.executeQuery();
                 if (rs.next()) {
                     // Inform the reporter that the report already exists
-                    out.println("<h2>Report already exists. Please do not repeat the same report.</h2>");
+                    ResponseBuilder.buildRedirectResponse(out, "Report already exists. Please do not repeat the same report.", "report.html");
                     return; // Exit the method to prevent duplicate insertion
                 }
             }
@@ -78,12 +70,11 @@ public class ReporterServlet extends HttpServlet {
                  int rowsInserted = statement.executeUpdate();
                  if (rowsInserted > 0) {
                      // Display success message
-                 
-                     out.println("<h1>Reporter details inserted successfully!</h1>");
-                     out.println("<h2>Kindly visit the security department for verification and confirmation of yoiur lost item.</h2>");
+                
+                     ResponseBuilder.buildRedirectResponse(out, "Reporter details inserted successfully! Kindly visit the security department for verification and confirmation of yoiur lost item.", "index.html");
                      
                  } else {
-                     out.println("<h2>Failed to insert reporter details. Please try again.</h2>");
+                     ResponseBuilder.buildRedirectResponse(out, "Failed to insert reporter details. Please try again.", "report.html");
                  }
              }
              catch (SQLException ex) {
@@ -91,7 +82,7 @@ public class ReporterServlet extends HttpServlet {
                  Logger.getLogger(ReporterServlet.class.getName()).log(Level.SEVERE, null, ex);
              }
          }
-     catch (ClassNotFoundException | SQLException ex) {
+     catch (SQLException ex) {
          Logger.getLogger(ReporterServlet.class.getName()).log(Level.SEVERE, null, ex);
      }
  }
