@@ -3,56 +3,91 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Records Entry</title>
+    <title>Records Entry</title>
     <link rel="stylesheet" href="styles.css" />
+
+    <script>
+      function validateForm(){
+        var itemName = form["item_name"].value.trim();
+        var description = form["description"].value.trim();
+        var locationFound = form["location_found"].value.trim();
+        var dateFound = form["date_found"].value.trim();
+
+        if (!itemName){
+          alert ("Pleae enter Item Name");
+          form["item_name"].focus();
+          return false;
+        }
+
+        if (!description){
+          alert("Please enter an adequate Description");
+          form["description"].focus();
+          return false;
+        }
+
+        if (!locationFound){
+          alert("Please enter Location Found");
+          form["location_found"].focus();
+          return false;
+        }
+
+        if(!dateFound){
+          alert("Please enter date found");
+          form["date_found"].focus();
+          return false;
+        }
+
+        return true;
+      }
+    </script>
+
   </head>
   <body>
+
     <header>
-      <h1>Admin Records Entry</h1>
-      <nav>
-        <ul>
-          <li><a href="index.html" style="color: white;">Home</a></li>
-          <li><a href="report.html" style="color: white;">Report Lost Item</a></li>
-          <a href="LogOutServlet">Logout</a>
-        </ul>
-      </nav>
-    </header>
-    <main>
-      <form action="RecordsServlet" method="post">
-        <label for="item_name">Item Name:</label>
-        <input type="text" id="itemName" name="item_name" required /><br />
+      <div class="header-container">
+        <a href="index.html">
+          <img src="images/logo1.jpg" alt="Logo" class="logo-img">
+        </a>
+  
+          <h1>Egerton University <br> and Found System</h1>
+          <nav class="nav-links">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="admin-login.html">User Login</a></li>
+                <li><a href="records.html">Records</a></li>
+                <li><a href="report.html">Reports</a> </li>
+            </ul>
+          </nav>
+      </div>
+  </header>
 
-        <label for="description">Description:</label>
-        <textarea
-          id="description"
-          name="description"
-          rows="4"
-          cols="50"
-          required
-        ></textarea
-        ><br />
 
-        <label for="location_found">Location Found:</label>
-        <input
-          type="text"
-          id="locationFound"
-          name="location_found"
-          required
-        /><br />
+  <main class="main-content">
+    <form name="recordsForm" action="RecordsServlet" method="post">
+      <label for="item_name">Item Name:</label>
+      <input type="text" id="item_name" name="item_name" required><br />
 
-        <label for="date_found">Date Found:</label>
-        <input type="date" id="date_found" name="date_found" required /><br />
-        
-        <label for="image">Upload Image:</label>
-        <input type="file" id="image" name="image" accept="image/*" /><br />
-        <div style="margin-top: 20px;"></div>
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" rows="4" cols="50" required></textarea><br/>
 
-        <input type="submit" value="Submit" />
-      </form>
-                
-    </main>
-    <footer>
-      <p>&copy; 2024 Lost and Found System</p>
+      <label for="location_found">Location Found:</label>
+      <input type="text" id="location_found" name="location_found" required><br/>
+
+      <label for="date_found">Date Found:</label>
+      <input type="date" id="date_found" name="date_found" required><br />
+
+      <input type="submit" value="Submit">
+    </form>
+  </main>
+    
+      <footer class="footer" id="footer">
+        <p>&copy; Copyright. <span id="currentYear"></span> Egerton Lost and Found System. All rights reserved.</p>
     </footer>
+
+    <script>
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+    </script>
+      
   </body>
 </html>
