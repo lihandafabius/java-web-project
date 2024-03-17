@@ -5,78 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Report Lost Item</title>
     <link rel="stylesheet" href="styles.css">
+    
     <script>
-   
-    function validateForm(){
-
-       var x=document.forms["myform"]["name"].value;
-       var y=document.forms["myform"]["email"].value;
-       var t=document.forms["myform"]["contact_number"].value;
-       var w=document.forms["myform"]["location_lost"].value;
-       var r=document.forms["myform"]["item_lost"].value;
-       var z=document.forms["myform"]["date_lost"].value;
-
-       if (x === null || x === ""){
-            alert("please enter name");
-            myform.name.focus();
-           return false;}
-      if (y=== null || y === ""){
-            alert("please enter email");
-            myform.email.focus();
-           return false;}
-       if (t === null || t === ""){
-            alert("please enter contact_number");
-            myform.contact_number.focus();
-           return false;}
-       if (w === null || w === ""){
-            alert("please enter location_lost ");
-            myform.location_lost.focus();
-           return false;}
-       if (r === null || r === ""){
-            alert("please enter item_lost");
-            myform.item_lost.focus();
-           return false;}
-       if (z === null || z === ""){
-            alert("please enter date_lost");
-            myform.date_lost.focus();
-           return false;}
-        
-         else{
-           myform.submit();
-           return true;
-       }
-       
-   }
+        function validateForm() {
+            var form = document.forms["myForm"];
+            var name = form["name"].value.trim();
+            var email = form["email"].value.trim();
+            var contactNumber = form["contactNumber"].value.trim();
+            var locationLost = form["locationLost"].value.trim();
+            var itemLost = form["itemLost"].value.trim();
+            var dateLost = form["dateLost"].value.trim();
+    
+            if (!name) {
+                alert("Please enter name");
+                form["name"].focus();
+                return false;
+            }
+            if (!email) {
+                alert("Please enter email");
+                form["email"].focus();
+                return false;
+            }
+            if (!contactNumber) {
+                alert("Please enter contact number");
+                form["contactNumber"].focus();
+                return false;
+            }
+            if (!locationLost) {
+                alert("Please enter location lost");
+                form["locationLost"].focus();
+                return false;
+            }
+            if (!itemLost) {
+                alert("Please enter item lost");
+                form["itemLost"].focus();
+                return false;
+            }
+            if (!dateLost) {
+                alert("Please enter date lost");
+                form["dateLost"].focus();
+                return false;
+            }
+    
+            return true;
+        }
     </script>
+    
+
 </head>
 <body>
-    <header>
-        <h1>Report Lost Item</h1>
-    </header>
-    <main>
-        <form name="myform" action="ReporterServlet" method="post"  onsubmit="return validateForm()">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" ><br>
 
-            <label for="contact_number">Contact Number:</label>
-            <input type="text" id="contactNumber" name="contact_number" ><br>
+    <header>
+        <div class="header-container">
+            <a href="index.html">
+                <img src="images/logo1.jpg" alt="Logo" class="logo-img">
+            </a>
+    
+            <h1>Egerton University <br> and Found System</h1>
+            <nav class="nav-links">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="admin-login.html">User Login</a></li>
+                    <li><a href="records.html">Records</a></li>
+                    <li><a href="report.html">Reports</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="main-content">
+        <form name="myForm" action="ReporterServlet" method="post" onsubmit="return validateForm()">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="contactNumber">Contact Number:</label>
+            <input type="tel" id="contactNumber" name="contactNumber" pattern="[0-9]{10}" title="Please enter a 10-digit phone number" required><br>
 
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" ><br>
+            <input type="email" id="email" name="email" required><br>
 
-            <label for="location_lost">Location Lost:</label>
-            <input type="text" id="locationLost" name="location_lost" ><br>
+            <label for="locationLost">Location Lost:</label>
+            <input type="text" id="locationLost" name="locationLost" required><br>
 
-            <label for="item_lost">Item Lost:</label>
-            <input type="text" id="itemLost" name="item_lost" ><br>
+            <label for="itemLost">Item Lost:</label>
+            <input type="text" id="itemLost" name="itemLost" required><br>
 
-            <label for="date_lost">Date Lost:</label>
-            <input type="date" id="dateLost" name="date_lost" ><br>
+            <label for="dateLost">Date Lost:</label>
+            <input type="date" id="dateLost" name="dateLost" required><br>
 
             <input type="submit" value="Submit">
-            
         </form>
-
     </main>
+    
+    <footer class="footer" id="footer">
+        <p>&copy; Copyright. <span id="currentYear"></span> Egerton Lost and Found System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+    </script>
+    
 </body>
 </html>
