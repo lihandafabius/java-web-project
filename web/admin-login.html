@@ -3,14 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
+    <title>User Login</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Admin Login</h1>
+        <div class="header-container">
+            <a href="index.html">
+                <img src="images/logo1.jpg" alt="Logo" class="logo-img">
+              </a>
+    
+            <h1>Egerton University <br> and Found System</h1>
+            <nav class="nav-links">
+              <ul>
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="admin-login.html">User Login</a></li>
+                  <li><a href="records.html">Records</a></li>
+                  <li><a href="report.html">Reports</a> </li>
+              </ul>
+            </nav>
+        </div>
     </header>
-    <main>
+
+    <main class="main-content">
         <form action="AdminServlet" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required><br>
@@ -21,6 +36,14 @@
             <input type="submit" value="Login">
         </form>
     </main>
+    <footer class="footer" id="footer">
+        <p>&copy; Copyright. <span id="currentYear"></span> Egerton Lost and Found System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+    </script>
+  
+
 </body>
 </html>
-
